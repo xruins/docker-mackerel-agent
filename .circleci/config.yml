@@ -36,4 +36,5 @@ jobs:
       - run:
           name: Build from dockerfile
           command: |
+            docker buildx create --use --name build --node build --driver-opt network=host
             docker buildx build . -t ${DOCKER_IMAGE} --platform ${BUILDX_PLATFORMS} --push
