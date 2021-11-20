@@ -27,7 +27,7 @@ RUN export GOOS=$(${TARGETPLATFORM} | cut -d'/' -f1) && \
     go build -o /artifacts/${pluginname}; \
     done
 
-FROM ubuntu
+FROM alpine
 COPY --from=builder /artifacts/* /usr/local/bin/
 COPY docker-mackerel-agent/startup.sh /usr/local/bin/
 RUN chmod -R 755 /usr/local/bin/
