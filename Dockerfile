@@ -15,7 +15,7 @@ RUN export GOOS=$(${TARGETPLATFORM} | cut -d'/' -f1) && \
         GOARCH: ${GOARCH}\n\
         GOARM: ${GOARM}\n" && \
     git clone --depth=1 https://github.com/mackerelio/mackerel-agent /go/src/github.com/mackerelio/mackerel-agent && \
-    mkdir /artifacts && \
+    mkdir  /artifacts && \
     go build -o /artifacts/mackerel-agent && \
     ls -la /artifacts && \
     git clone --depth=1 https://github.com/mackerelio/mackerel-agent-plugins /go/src/github.com/mackerelio/mackerel-agent-plugins && \
@@ -28,7 +28,7 @@ RUN export GOOS=$(${TARGETPLATFORM} | cut -d'/' -f1) && \
     done
 
 FROM alpine
-COPY --from=builder /artifacts/* /usr/local/bin/
-COPY docker-mackerel-agent/startup.sh /usr/local/bin/
-RUN chmod -R 755 /usr/local/bin/
-CMD ["/usr/local/bin/startup.sh"]
+COPY --from=builder /artifacts/* /usr/bin/
+COPY docker-mackerel-agent/startup.sh /startup.sh
+RUN chmod -R 755 /startup.sh /usr/bin/mackerel*
+CMD ["/startup.sh"]
