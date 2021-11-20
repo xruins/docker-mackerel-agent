@@ -5,9 +5,9 @@ ARG BUILDPLATFORM
 
 WORKDIR /go/src/github.com/mackerelio/mackerel-agent
 
-RUN export GOOS=$(${TARGETPLATFORM} | cut -d'/' -f1) && \
-    export GOARCH=$(${TARGETPLATFORM} | cut -d'/' -f2) && \
-    export GOARM=$(${TARGETPLATFORM} | cut -d'/' -f3 | cut -c2) && \
+RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
+    export GOARCH=$(echo ${TARGETPLATFORM} | cut -d'/' -f2) && \
+    export GOARM=$(echo ${TARGETPLATFORM} | cut -d'/' -f3 | cut -c2) && \
     echo "[build info]\n\
         TARGETPLATFORM: ${TARGETPLATFORM}\n\
         BUILDPLATFORM: ${BUILDPLATFORM}\n\
