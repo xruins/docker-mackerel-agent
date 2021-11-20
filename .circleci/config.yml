@@ -6,7 +6,7 @@ jobs:
     environment:
       DOCKER_BUILDKIT: 1
       DOCKER_TAG: $DOCKER_TAG
-      DOCKER_IMAGE: xruins/mackerel-agent
+      DOCKER_IMAGE: ruins/mackerel-agent
       BUILDX_PLATFORMS: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6,linux/arm/v5
     steps:
       - checkout
