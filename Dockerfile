@@ -16,7 +16,7 @@ RUN export GOOS=$(${TARGETPLATFORM} | cut -d'/' -f1) && \
         GOARM: ${GOARM}\n" && \
     git clone --depth=1 https://github.com/mackerelio/mackerel-agent /go/src/github.com/mackerelio/mackerel-agent && \
     mkdir /artifacts && \
-    go build -ldflags="-w -s" -o /artifacts/mackerel-agent && \
+    go build -o /artifacts/mackerel-agent && \
     ls -la /artifacts && \
     git clone --depth=1 https://github.com/mackerelio/mackerel-agent-plugins /go/src/github.com/mackerelio/mackerel-agent-plugins && \
     plugins=$(find /go/src/github.com/mackerelio/mackerel-agent-plugins -name "mackerel-plugins-*" -type d) && \
@@ -24,7 +24,7 @@ RUN export GOOS=$(${TARGETPLATFORM} | cut -d'/' -f1) && \
     do \
     cd ${dir}; \
     pluginname=$(basename ${PWD}); \
-    go build -ldflags="-w -s" -o /artifacts/${pluginname}; \
+    go build -o /artifacts/${pluginname}; \
     done
 
 FROM alpine
