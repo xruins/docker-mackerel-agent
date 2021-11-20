@@ -31,4 +31,5 @@ FROM alpine
 COPY --from=builder /artifacts/* /usr/bin/
 COPY docker-mackerel-agent/startup.sh /startup.sh
 RUN chmod -R 755 /startup.sh /usr/bin/mackerel*
+RUN apk add --no-cache libc6-compat
 CMD ["/startup.sh"]
