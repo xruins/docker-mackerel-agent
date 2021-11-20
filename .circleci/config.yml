@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     machine:
-      image: ubuntu-1604:202007-01 # we want a new Docker
+      image: ubuntu-2004:202111-01
     environment:
       DOCKER_BUILDKIT: 1
       DOCKER_TAG: $DOCKER_TAG
@@ -33,8 +33,6 @@ jobs:
             chmod a+x ~/.docker/cli-plugins/docker-buildx
 
             docker buildx install
-            # Run binfmt
-            docker run --rm --privileged tonistiigi/binfmt:latest --install "$BUILDX_PLATFORMS"
       - run:
           name: Build from dockerfile
           command: |
