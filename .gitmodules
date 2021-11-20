@@ -1,0 +1,3 @@
+[submodule "docker-mackerel-agent"]
+	path = docker-mackerel-agent
+	url = https://github.com/mackerelio/docker-mackerel-agent
