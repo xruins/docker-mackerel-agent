@@ -41,13 +41,14 @@ FROM alpine
 COPY --from=builder /artifacts/* /usr/bin/
 COPY docker-mackerel-agent/startup.sh /startup.sh
 COPY wrapper.sh /wrapper.sh
-RUN chmod -R 755 \
+RUN mkdir /plugins && \
+    chmod -R 755 \
     /startup.sh \
     /wrapper.sh \
     /usr/bin/mackerel-* \
     /usr/bin/check-* \
-    /usr/bin/mkr && \
-    mkdir /plugins
+    /usr/bin/mkr \
+    /plugins 
 ENV PATH $PATH:/plugins
 RUN apk add --no-cache libc6-compat
 CMD ["/wrapper.sh"]
