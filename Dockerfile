@@ -50,5 +50,5 @@ RUN mkdir /plugins && \
     /usr/bin/mkr \
     /plugins 
 ENV PATH $PATH:/plugins
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat docker
 CMD ["/wrapper.sh"]
