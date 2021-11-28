@@ -26,7 +26,7 @@ RUN git clone --depth=1 https://github.com/mackerelio/mackerel-agent-plugins /go
     do \
     cd ${dir}; \
     pluginname=$(basename ${PWD}); \
-    go build -ldflags="-w -s" /artifacts/${pluginname}; \
+    go build -ldflags="-w -s" -o /artifacts/${pluginname}; \
     done
 RUN git clone --depth=1 https://github.com/mackerelio/go-check-plugins /go/src/github.com/mackerelio/go-check-plugins && \
     plugins=$(find /go/src/github.com/mackerelio/go-check-plugins -name "check-*" -type d) && \
