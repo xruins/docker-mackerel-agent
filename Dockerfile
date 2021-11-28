@@ -21,7 +21,7 @@ RUN git clone --depth=1 https://github.com/mackerelio/mkr /go/src/github.com/mac
     cd /go/src/github.com/mackerelio/mkr && \
     go build -ldflags="-w -s" -o /artifacts/mkr
 RUN git clone --depth=1 https://github.com/mackerelio/mackerel-agent-plugins /go/src/github.com/mackerelio/mackerel-agent-plugins && \
-    plugins=$(find /go/src/github.com/mackerelio/mackerel-agent-plugins -name "mackerel-plugins-*" -type d) && \
+    plugins=$(find /go/src/github.com/mackerelio/mackerel-agent-plugins -name "mackerel-plugin-*" -type d) && \
     for dir in ${plugins}; \
     do \
     cd ${dir}; \
