@@ -1,5 +1,6 @@
 # docker-mackerel-agent
 
+[![Docker](https://img.shields.io/docker/image-size/ruins/mackerel-agent)](https://hub.docker.com/r/ruins/mackerel-agent/)
 [![CircleCI](https://circleci.com/gh/xruins/docker-mackerel-agent/tree/master.svg?style=svg)](https://circleci.com/gh/xruins/docker-mackerel-agent/tree/master)
 
 # Usage
