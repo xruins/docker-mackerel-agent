@@ -5,7 +5,7 @@ on:
     
 jobs:
   daily-check:
-    runs-on: alpine/git
+    runs-on: ubuntu-20.04
     steps:
       - name: Check mackerelio repositories
         run: |
