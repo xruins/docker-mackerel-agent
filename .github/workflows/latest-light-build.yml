@@ -1,6 +1,12 @@
 name: latest-light-build
 
-on: [ workflow_dispatch ]
+on:
+  workflow_dispatch:
+    inputs:
+      repos_hash:
+        description: "SHA256 of combined string calculated by dependencies"
+        required: false
+        default: "latest" 
 
 jobs:
   buildx:
@@ -23,7 +29,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-${{ github.sha }}-light
           restore-keys: |
             ${{ runner.os }}-buildx-
 
@@ -41,6 +47,7 @@ jobs:
           file: ./latest-light.Dockerfile
           tags: |
             ruins/mackerel-agent:latest-light
+            ruins/mackerel-agent:${{ github.event.inputs.repos_hash }}-light
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache
