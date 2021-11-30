@@ -8,7 +8,7 @@
 
 Visit https://github.com/mackerelio/docker-mackerel-agent/blob/master/README.md for basic usage.
 
-# Compare
+# Comparison
 
 | Image                                                                         | Official | Image size(approx.) | Support arm64/armv7 | Bundled official plugins [^1] | Plugin installation |
 | ----------------------------------------------------------------------------- | -------- | ------------------- | ------------------- | ------------------------ | ------------------- |
