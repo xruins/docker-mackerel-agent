@@ -9,6 +9,9 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: true
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -23,6 +26,9 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
+      - 
+        name: Pull submodules
+
       -
         name: Login to DockerHub
         uses: docker/login-action@v1 
