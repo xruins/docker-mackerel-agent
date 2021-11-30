@@ -3,9 +3,18 @@
 [![Docker Image Size](https://img.shields.io/docker/image-size/ruins/mackerel-agent/latest)](https://hub.docker.com/r/ruins/mackerel-agent)
 [![latest build](https://github.com/xruins/docker-mackerel-agent/actions/workflows/latest-build.yml/badge.svg)](https://github.com/xruins/docker-mackerel-agent/actions/workflows/latest-build.yml)
 [![latest-light build](https://github.com/xruins/docker-mackerel-agent/actions/workflows/latest-light-build.yml/badge.svg)](https://github.com/xruins/docker-mackerel-agent/actions/workflows/latest-light-build.yml)
+
 # Usage
 
 Visit https://github.com/mackerelio/docker-mackerel-agent/blob/master/README.md for basic usage.
+
+# Compare
+
+| Image                                                                         | Official | Image size(approx.) | Support arm64/armv7 | Bundled official plugins | Plugin installation |
+| ----------------------------------------------------------------------------- | -------- | ------------------- | ------------------- | ------------------------ | ------------------- |
+| [mackerelio/mackerel-agent](https://hub.docker.com/r/mackerel/mackerel-agent) | ✓        | 390MB               | ✘                   | ✓                        | ✘                   |
+| ruins/mackerel-agent:latest                                                   | ✘        | 240MB               | ✓                   | ✓                        | ✓                   |
+| ruins/mackerel-agent:latest-light                                             | ✘        | 80MB                | ✓                   | ✘                        | ✓                   |
 
 ## Plugin installation
 
