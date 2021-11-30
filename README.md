@@ -10,12 +10,13 @@ Visit https://github.com/mackerelio/docker-mackerel-agent/blob/master/README.md 
 
 # Compare
 
-| Image                                                                         | Official | Image size(approx.) | Support arm64/armv7 | Bundled official plugins | Plugin installation |
+| Image                                                                         | Official | Image size(approx.) | Support arm64/armv7 | Bundled official plugins [^1] | Plugin installation |
 | ----------------------------------------------------------------------------- | -------- | ------------------- | ------------------- | ------------------------ | ------------------- |
 | [mackerelio/mackerel-agent](https://hub.docker.com/r/mackerel/mackerel-agent) | ✓        | 390MB               | ✘                   | ✓                        | ✘                   |
 | ruins/mackerel-agent:latest                                                   | ✘        | 240MB               | ✓                   | ✓                        | ✓                   |
 | ruins/mackerel-agent:latest-light                                             | ✘        | 80MB                | ✓                   | ✘                        | ✓                   |
 
+[^1]: it means all plugins of [mackerelio/mackerel-agent-plugins](https://github.com/mackerelio/mackerel-agent-plugins) and [mackerelio/go-check-plugins](https://github.com/mackerelio/go-check-plugins) are executable in PATH.
 ## Plugin installation
 
 By setting `mackerel_plugins` for environment variable, install plugins when start docker image.
