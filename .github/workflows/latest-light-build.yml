@@ -26,8 +26,6 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
-      - 
-        name: Pull submodules
 
       -
         name: Login to DockerHub
