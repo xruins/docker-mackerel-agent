@@ -1,8 +1,8 @@
 # docker-mackerel-agent
 
 [![Docker](https://img.shields.io/docker/image-size/ruins/mackerel-agent)](https://hub.docker.com/r/ruins/mackerel-agent/)
-[![CircleCI](https://circleci.com/gh/xruins/docker-mackerel-agent/tree/master.svg?style=svg)](https://circleci.com/gh/xruins/docker-mackerel-agent/tree/master)
-
+![latest build](https://github.com/xruins/docker-mackerel-agent/actions/workflows/latest-build.yml/badge.svg)
+![latest-light build](https://github.com/xruins/docker-mackerel-agent/actions/workflows/latest-light-build.yml/badge.svg)
 # Usage
 
 Visit https://github.com/mackerelio/docker-mackerel-agent/blob/master/README.md for basic usage.
