@@ -1,6 +1,6 @@
 # docker-mackerel-agent
 
-![Docker Image Size (tag)](https://img.shields.io/docker/image-size/ruins/mackerel-agent/latest)
+[![Docker Image Size](https://img.shields.io/docker/image-size/ruins/mackerel-agent/latest)](https://hub.docker.com/r/ruins/mackerel-agent)
 [![latest build](https://github.com/xruins/docker-mackerel-agent/actions/workflows/latest-build.yml/badge.svg)](https://github.com/xruins/docker-mackerel-agent/actions/workflows/latest-build.yml)
 [![latest-light build](https://github.com/xruins/docker-mackerel-agent/actions/workflows/latest-light-build.yml/badge.svg)](https://github.com/xruins/docker-mackerel-agent/actions/workflows/latest-light-build.yml)
 # Usage
