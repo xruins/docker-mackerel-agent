@@ -13,13 +13,13 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
         BUILDPLATFORM: ${BUILDPLATFORM}\n\
         GOOS: ${GOOS}\n\
         GOARCH: ${GOARCH}\n\
-        GOARM: ${GOARM}\n" 
+        GOARM: ${GOARM}\n" && \
     git clone --depth=1 https://github.com/mackerelio/mackerel-agent /go/src/github.com/mackerelio/mackerel-agent && \
     mkdir /artifacts && \
     go build -ldflags="-w -s" -o /artifacts/mackerel-agent
     git clone --depth=1 https://github.com/mackerelio/mkr /go/src/github.com/mackerelio/mkr && \
     cd /go/src/github.com/mackerelio/mkr && \
-    go build -ldflags="-w -s" -o /artifacts/mkr
+    go build -ldflags="-w -s" -o /artifacts/mkr && \
     git clone --depth=1 https://github.com/mackerelio/mackerel-agent-plugins /go/src/github.com/mackerelio/mackerel-agent-plugins && \
     plugins=$(find /go/src/github.com/mackerelio/mackerel-agent-plugins -name "mackerel-plugin-*" -type d) && \
     for dir in ${plugins}; \
@@ -27,7 +27,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
     cd ${dir}; \
     pluginname=$(basename ${PWD}); \
     go build -ldflags="-w -s" -o /artifacts/${pluginname}; \
-    done
+    done && \
     git clone --depth=1 https://github.com/mackerelio/go-check-plugins /go/src/github.com/mackerelio/go-check-plugins && \
     plugins=$(find /go/src/github.com/mackerelio/go-check-plugins -name "check-*" -type d) && \
     for dir in ${plugins}; \

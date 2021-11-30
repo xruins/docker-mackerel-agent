@@ -13,10 +13,10 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
         BUILDPLATFORM: ${BUILDPLATFORM}\n\
         GOOS: ${GOOS}\n\
         GOARCH: ${GOARCH}\n\
-        GOARM: ${GOARM}\n" 
+        GOARM: ${GOARM}\n" && \
     git clone --depth=1 https://github.com/mackerelio/mackerel-agent /go/src/github.com/mackerelio/mackerel-agent && \
     mkdir /artifacts && \
-    go build -ldflags="-w -s" -o /artifacts/mackerel-agent
+    go build -ldflags="-w -s" -o /artifacts/mackerel-agent && \
     git clone --depth=1 https://github.com/mackerelio/mkr /go/src/github.com/mackerelio/mkr && \
     cd /go/src/github.com/mackerelio/mkr && \
     go build -ldflags="-w -s" -o /artifacts/mkr
