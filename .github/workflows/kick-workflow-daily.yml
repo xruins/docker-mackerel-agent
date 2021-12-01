@@ -27,7 +27,7 @@ jobs:
           inputs: '{ "repos_hash": "env.SHA256_TOTAL" }'
 
       - name: Invoke `latest-light` workflow
-        uses: benc-uk/workflow-dispatch@v1v1
+        uses: benc-uk/workflow-dispatch@v1
         if: env.SKIP == 0
         with:
           workflow: latest-light
