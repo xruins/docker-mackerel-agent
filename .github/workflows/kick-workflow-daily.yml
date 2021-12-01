@@ -21,7 +21,7 @@ jobs:
 
       - name: Invoke `latest` workflow
         uses: benc-uk/workflow-dispatch@v1
-        if: ${{ env.EXIST != "true" }}
+        if: ${{ env.EXIST != true }}
         with:
           workflow: latest
           token: ${{ secrets.PERSONAL_TOKEN }}
@@ -29,7 +29,7 @@ jobs:
 
       - name: Invoke `latest-light` workflow
         uses: benc-uk/workflow-dispatch@v1
-        if: ${{ env.EXIST != "true" }}
+        if: ${{ env.EXIST != true }}
         with:
           workflow: latest-light
           token: ${{ secrets.PERSONAL_TOKEN }}
