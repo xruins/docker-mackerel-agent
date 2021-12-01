@@ -23,7 +23,7 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         if: ${{ env.EXIST != true }}
         with:
-          workflow: latest
+          workflow: latest-build
           token: ${{ secrets.PERSONAL_TOKEN }}
           inputs: '{ "repos_hash": "env.SHA256_TOTAL" }'
 
@@ -31,7 +31,7 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         if: ${{ env.EXIST != true }}
         with:
-          workflow: latest-light
+          workflow: latest-light-build
           token: ${{ secrets.PERSONAL_TOKEN }}
           inputs: '{ "repos_hash": "env.SHA256_TOTAL" }'
   
