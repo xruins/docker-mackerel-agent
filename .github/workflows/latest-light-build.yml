@@ -49,7 +49,7 @@ jobs:
             ruins/mackerel-agent:latest-light
             ruins/mackerel-agent:${{ github.event.inputs.repos_hash }}-light
           build-args: |
-            SHA256_MACKEREL_AGENT=${{ env.SHA256_TOTAL }}
+            SHA256_MACKEREL_AGENT=${{ env.SHA256_MACKEREL_AGENT }}
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache
