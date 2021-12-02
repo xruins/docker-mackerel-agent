@@ -26,7 +26,7 @@ jobs:
         with:
           workflow: latest-build
           token: ${{ secrets.PERSONAL_TOKEN }}
-          inputs: '{ "repos_hash": "env.SHA256_TOTAL" }'
+          inputs: '{ "repos_hash": "${{ env.SHA256_TOTAL }}" }'
 
       - name: Invoke `latest-light` workflow
         uses: benc-uk/workflow-dispatch@v1
@@ -34,5 +34,5 @@ jobs:
         with:
           workflow: latest-light-build
           token: ${{ secrets.PERSONAL_TOKEN }}
-          inputs: '{ "repos_hash": "env.SHA256_TOTAL" }'
+          inputs: '{ "repos_hash": "${{ env.SHA256_MACKEREL_AGENT }}" }'
   
