@@ -47,6 +47,8 @@ jobs:
           tags: |
             ruins/mackerel-agent:latest
             ruins/mackerel-agent:${{ github.event.inputs.repos_hash }}
+          build-args: |
+            SHA256_TOTAL=${{ env.SHA256_TOTAL }}
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache
