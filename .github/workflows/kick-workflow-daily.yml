@@ -10,9 +10,9 @@ jobs:
     steps:
       - name: Check mackerelio repositories
         run: |
-          echo "SHA256_MACKEREL_AGENT=$(git ls-remote -h https://github.com/mackerelio/mackerel-agent | grep master | awk '{ print $1 }') | tee -a $GITHUB_ENV
-          echo "SHA256_MACKEREL_PLUGINS=$(git ls-remote -h https://github.com/mackerelio/mackerel-agent-plugins | grep master | awk '{ print $1 }') | tee -a $GITHUB_ENV
-          echo "SHA256_MACKEREL_CHECK_PLUGINS=$(git ls-remote -h https://github.com/mackerelio/go-check-plugins | grep master | awk '{ print $1 }') | tee -a $GITHUB_ENV
+          echo "SHA256_MACKEREL_AGENT=$(git ls-remote -h https://github.com/mackerelio/mackerel-agent | grep master | awk '{ print $1 }')" | tee -a $GITHUB_ENV
+          echo "SHA256_MACKEREL_PLUGINS=$(git ls-remote -h https://github.com/mackerelio/mackerel-agent-plugins | grep master | awk '{ print $1 }')" | tee -a $GITHUB_ENV
+          echo "SHA256_MACKEREL_CHECK_PLUGINS=$(git ls-remote -h https://github.com/mackerelio/go-check-plugins | grep master | awk '{ print $1 }')" | tee -a $GITHUB_ENV
           SHA256_TOTAL=$(echo "${SHA256_MACKEREL_AGENT}-${SHA256_MACKEREL_PLUGINS}-${SHA256_MACKEREL_CHECK_PLUGINS}" | sha256sum - | awk '{ print $1 }')
           echo "SHA256_TOTAL=${SHA256_TOTAL}" | tee -a $GITHUB_ENV
           EXIST=$(curl -L -s 'https://registry.hub.docker.com/v2/repositories/ruins/mackerel-agent/tags' | jq "[.results[].name] | index(\"${SHA256_TOTAL_HASH}\") == 0")
