@@ -26,12 +26,12 @@ jobs:
           workflow: latest-build
           token: ${{ secrets.PERSONAL_TOKEN }}
           inputs: |
-          {
-            "docker_tag": "${{ env.HASH_TOTAL }}",
-            "hash_mackerel-agent": "${{ env.HASH_MACKEREL_AGENT }}",
-            "hash_mackerel-plugins": "${{ env.HASH_MACKEREL_PLUGINS }}",
-            "hash_mackerel-check-plugins": "${{ env.HASH_MACKEREL_CHECK_PLUGINS }}",
-          }
+            {
+              "docker_tag": "${{ env.HASH_TOTAL }}",
+              "hash_mackerel-agent": "${{ env.HASH_MACKEREL_AGENT }}",
+              "hash_mackerel-plugins": "${{ env.HASH_MACKEREL_PLUGINS }}",
+              "hash_mackerel-check-plugins": "${{ env.HASH_MACKEREL_CHECK_PLUGINS }}",
+            }
 
       - name: Invoke `latest-light` workflow
         uses: benc-uk/workflow-dispatch@v1
@@ -40,7 +40,7 @@ jobs:
           workflow: latest-light-build
           token: ${{ secrets.PERSONAL_TOKEN }}
           inputs: |
-          {
-            "docker_tag": "${{ env.HASH_TOTAL }}",
-            "hash_mackerel-agent": "${{ env.HASH_MACKEREL_AGENT }}",
-          }
+            {
+             "docker_tag": "${{ env.HASH_TOTAL }}",
+             "hash_mackerel-agent": "${{ env.HASH_MACKEREL_AGENT }}",
+            }
