@@ -3,10 +3,14 @@ name: latest-light-build
 on:
   workflow_dispatch:
     inputs:
-      repos_hash:
-        description: "SHA256 of combined string calculated by dependencies"
+      docker_tag:
+        description: "docker image tag"
         required: false
         default: "latest" 
+      hash_mackerel-agent:
+        description: "commit hash of mackerelio/mackerel-agent"
+        required: false
+        default: ""
 
 jobs:
   buildx:
@@ -47,9 +51,9 @@ jobs:
           file: ./latest-light.Dockerfile
           tags: |
             ruins/mackerel-agent:latest-light
-            ruins/mackerel-agent:${{ github.event.inputs.repos_hash }}-light
+            ruins/mackerel-agent:${{ github.event.inputs.docker_tag }}-light
           build-args: |
-            SHA256_MACKEREL_AGENT=${{ env.SHA256_MACKEREL_AGENT }}
+            HASH_MACKEREL_AGENT=${{ github.event.inputs.hash_mackerel-agent }}
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache

@@ -10,11 +10,11 @@ jobs:
     steps:
       - name: Check mackerelio repositories
         run: |
-          echo "SHA256_MACKEREL_AGENT=$(git ls-remote -h https://github.com/mackerelio/mackerel-agent | grep master | awk '{ print $1 }')" | tee -a $GITHUB_ENV
-          echo "SHA256_MACKEREL_PLUGINS=$(git ls-remote -h https://github.com/mackerelio/mackerel-agent-plugins | grep master | awk '{ print $1 }')" | tee -a $GITHUB_ENV
-          echo "SHA256_MACKEREL_CHECK_PLUGINS=$(git ls-remote -h https://github.com/mackerelio/go-check-plugins | grep master | awk '{ print $1 }')" | tee -a $GITHUB_ENV
-          SHA256_TOTAL=$(echo "${SHA256_MACKEREL_AGENT}-${SHA256_MACKEREL_PLUGINS}-${SHA256_MACKEREL_CHECK_PLUGINS}" | sha256sum - | awk '{ print $1 }')
-          echo "SHA256_TOTAL=${SHA256_TOTAL}" | tee -a $GITHUB_ENV
+          echo "HASH=$(git ls-remote -h https://github.com/mackerelio/mackerel-agent | grep master | awk '{ print $1 }')" | tee -a $GITHUB_ENV
+          echo "HASH_MACKEREL_PLUGINS=$(git ls-remote -h https://github.com/mackerelio/mackerel-agent-plugins | grep master | awk '{ print $1 }')" | tee -a $GITHUB_ENV
+          echo "HASH_MACKEREL_CHECK_PLUGINS=$(git ls-remote -h https://github.com/mackerelio/go-check-plugins | grep master | awk '{ print $1 }')" | tee -a $GITHUB_ENV
+          HASH_TOTAL=$(echo "${SHA256_MACKEREL_AGENT}-${SHA256_MACKEREL_PLUGINS}-${SHA256_MACKEREL_CHECK_PLUGINS}" | sha256sum - | awk '{ print $1 }')
+          echo "HASH_TOTAL=${SHA256_TOTAL}" | tee -a $GITHUB_ENV
           EXIST=$(curl -L -s 'https://registry.hub.docker.com/v2/repositories/ruins/mackerel-agent/tags' | jq "[.results[].name] | index(\"${SHA256_TOTAL}\") == 0")
           echo "EXIST=${EXIST}" | tee -a $GITHUB_ENV
         shell: bash
@@ -25,7 +25,13 @@ jobs:
         with:
           workflow: latest-build
           token: ${{ secrets.PERSONAL_TOKEN }}
-          inputs: '{ "repos_hash": "${{ env.SHA256_TOTAL }}" }'
+          inputs: |
+          {
+            "docker_tag": "${{ env.HASH_TOTAL }}",
+            "hash_mackerel-agent": "${{ env.HASH_MACKEREL_AGENT }}",
+            "hash_mackerel-plugins": "${{ env.HASH_MACKEREL_PLUGINS }}",
+            "hash_mackerel-check-plugins": "${{ env.HASH_MACKEREL_CHECK_PLUGINS }}",
+          }
 
       - name: Invoke `latest-light` workflow
         uses: benc-uk/workflow-dispatch@v1
@@ -33,5 +39,8 @@ jobs:
         with:
           workflow: latest-light-build
           token: ${{ secrets.PERSONAL_TOKEN }}
-          inputs: '{ "repos_hash": "${{ env.SHA256_MACKEREL_AGENT }}" }'
-  
+          inputs: |
+          {
+            "docker_tag": "${{ env.HASH_TOTAL }}",
+            "hash_mackerel-agent": "${{ env.HASH_MACKEREL_AGENT }}",
+          }

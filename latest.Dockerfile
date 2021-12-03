@@ -5,7 +5,7 @@ ARG BUILDPLATFORM
 
 WORKDIR /go/src/github.com/mackerelio/mackerel-agent
 
-ARG SHA256_MACKEREL_AGENT
+ARG HASH_MACKEREL_AGENT
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d'/' -f2) && \
     export GOARM=$(echo ${TARGETPLATFORM} | cut -d'/' -f3 | cut -c2) && \
@@ -19,7 +19,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
     mkdir /artifacts && \
     go build -ldflags="-w -s" -o /artifacts/mackerel-agent
     
-ARG SHA256_MACKEREL_PLUGINS
+ARG HASH_MACKEREL_PLUGINS
 RUN git clone --depth=1 https://github.com/mackerelio/mkr /go/src/github.com/mackerelio/mkr && \
     cd /go/src/github.com/mackerelio/mkr && \
     go build -ldflags="-w -s" -o /artifacts/mkr && \
@@ -32,7 +32,7 @@ RUN git clone --depth=1 https://github.com/mackerelio/mkr /go/src/github.com/mac
     go build -ldflags="-w -s" -o /artifacts/${pluginname}; \
     done
     
-ARG SHA256_MACKEREL_CHECK_PLUGINS
+ARG HASH_MACKEREL_CHECK_PLUGINS
 RUN git clone --depth=1 https://github.com/mackerelio/go-check-plugins /go/src/github.com/mackerelio/go-check-plugins && \
     plugins=$(find /go/src/github.com/mackerelio/go-check-plugins -name "check-*" -type d) && \
     for dir in ${plugins}; \

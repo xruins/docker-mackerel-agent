@@ -3,10 +3,22 @@ name: latest-build
 on:
   workflow_dispatch:
     inputs:
-      repos_hash:
-        description: "SHA256 of combined string calculated by dependencies"
+      docker_tag:
+        description: "docker image tag"
         required: false
         default: "latest" 
+      hash_mackerel-agent:
+        description: "commit hash of mackerelio/mackerel-agent"
+        required: false
+        default: "" 
+      hash_mackerel-plugins:
+        description: "commit hash of mackerelio/mackerel-agent-plugins"
+        required: false
+        default: "" 
+      hash_mackerel-check-plugins:
+        description: "commit hash of mackerelio/go-check-plugins"
+        required: false
+        default: "" 
       
 jobs:
   buildx:
@@ -48,10 +60,9 @@ jobs:
             ruins/mackerel-agent:latest
             ruins/mackerel-agent:${{ github.event.inputs.repos_hash }}
           build-args: |
-            SHA256_TOTAL=${{ env.SHA256_TOTAL }}
-            SHA256_MACKEREL_AGENT=${{ env.SHA256_MACKEREL_AGENT }}
-            SHA256_MACKEREL_PLUGINS=${{ env.SHA256_MACKEREL_PLUGINS }}
-            SHA256_MACKEREL_CHECK_PLUGINS=${{ env.SHA256_MACKEREL_CHECK_PLUGINS }}
+            HASH_MACKEREL_AGENT=${{ github.event.inputs.hash_mackerel-agent }}
+            HASH_MACKEREL_PLUGINS=${{ github.event.inputs.hash_mackerel-plugins }}
+            HASH_MACKEREL_CHECK_PLUGINS=${{ github.event.inputs.hash_mackerel-check-plugins }}
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache

@@ -5,7 +5,7 @@ ARG BUILDPLATFORM
 
 WORKDIR /go/src/github.com/mackerelio/mackerel-agent
 
-ARG SHA256_MACKEREL_AGENT
+ARG HASH_MACKEREL_AGENT
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d'/' -f2) && \
     export GOARM=$(echo ${TARGETPLATFORM} | cut -d'/' -f3 | cut -c2) && \
