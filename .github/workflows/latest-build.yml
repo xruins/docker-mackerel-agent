@@ -58,7 +58,7 @@ jobs:
           file: ./latest.Dockerfile
           tags: |
             ruins/mackerel-agent:latest
-            ruins/mackerel-agent:${{ github.event.inputs.repos_hash }}
+            ruins/mackerel-agent:${{ github.event.inputs.docker_tag }}
           build-args: |
             HASH_MACKEREL_AGENT=${{ github.event.inputs.hash_mackerel-agent }}
             HASH_MACKEREL_PLUGINS=${{ github.event.inputs.hash_mackerel-plugins }}
