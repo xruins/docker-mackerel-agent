@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Check mackerelio repositories
         run: |
-          echo "HASH=$(git ls-remote -h https://github.com/mackerelio/mackerel-agent | grep master | awk '{ print $1 }')" | tee -a $GITHUB_ENV
+          echo "HASH_MACKEREL_AGENT=$(git ls-remote -h https://github.com/mackerelio/mackerel-agent | grep master | awk '{ print $1 }')" | tee -a $GITHUB_ENV
           echo "HASH_MACKEREL_PLUGINS=$(git ls-remote -h https://github.com/mackerelio/mackerel-agent-plugins | grep master | awk '{ print $1 }')" | tee -a $GITHUB_ENV
           echo "HASH_MACKEREL_CHECK_PLUGINS=$(git ls-remote -h https://github.com/mackerelio/go-check-plugins | grep master | awk '{ print $1 }')" | tee -a $GITHUB_ENV
           HASH_TOTAL=$(echo "${HASH_MACKEREL_AGENT}-${HASH_MACKEREL_PLUGINS}-${HASH_MACKEREL_CHECK_PLUGINS}" | sha1sum - | awk '{ print $1 }')
