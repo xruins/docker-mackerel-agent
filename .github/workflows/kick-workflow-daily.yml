@@ -43,7 +43,7 @@ jobs:
 
       - name: Invoke `latest-light` workflow
         uses: benc-uk/workflow-dispatch@v1
-        if: ${{ env.EXIST != 'false' }}
+        if: ${{ env.EXIST == 'false' }}
         with:
           workflow: latest-light-build
           token: ${{ secrets.PERSONAL_TOKEN }}
