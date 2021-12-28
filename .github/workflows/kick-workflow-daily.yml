@@ -26,10 +26,10 @@ jobs:
           EXIST=$(curl -L -s 'https://registry.hub.docker.com/v2/repositories/ruins/mackerel-agent/tags' | jq "[.results[].name] | index(\"${HASH_TOTAL}\") >= 0")
           echo "EXIST=${EXIST}" | tee -a $GITHUB_ENV
         shell: bash
-
+        
       - name: Invoke `latest` workflow
         uses: benc-uk/workflow-dispatch@v1
-        if: ${{ env.EXIST != 'false' }}
+        if: ${{ env.EXIST == 'false' }}
         with:
           workflow: latest-build
           token: ${{ secrets.PERSONAL_TOKEN }}
