@@ -9,6 +9,7 @@ ARG HASH_MACKEREL_AGENT
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d'/' -f2) && \
     export GOARM=$(echo ${TARGETPLATFORM} | cut -d'/' -f3 | cut -c2) && \
+    export CGO_ENABLED=0 && \
     echo "[build info]\n\
         TARGETPLATFORM: ${TARGETPLATFORM}\n\
         BUILDPLATFORM: ${BUILDPLATFORM}\n\
@@ -29,7 +30,7 @@ COPY wrapper.sh /wrapper.sh
 RUN chmod -R 755 \
     /startup.sh \
     /wrapper.sh \
-    /usr/bin/mkr && \
-    apk add --no-cache libc6-compat docker
+    /usr/bin/mackerel-agent \
+    /usr/bin/mkr
 ENV PATH $PATH:/opt/mackerel-agent/plugins/bin
 CMD ["/wrapper.sh"]
