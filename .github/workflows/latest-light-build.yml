@@ -60,8 +60,8 @@ jobs:
           tags: |
             ruins/mackerel-agent:latest-light
             ruins/mackerel-agent:${{ github.event.inputs.docker_tag }}-light
-            gchr.io/xruins/mackerel-agent:latest
-            gchr.io/xruins/mackerel-agent:${{ github.event.inputs.docker_tag }}
+            gchr.io/xruins/docker-mackerel-agent/mackerel-agent:latest
+            gchr.io/xruins/docker-mackerel-agent/mackerel-agent:${{ github.event.inputs.docker_tag }}
           build-args: |
             HASH_MACKEREL_AGENT=${{ github.event.inputs.hash_mackerel-agent }}
           platforms: linux/amd64,linux/arm/v7,linux/arm64
