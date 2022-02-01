@@ -67,8 +67,8 @@ jobs:
           tags: |
             ruins/mackerel-agent:latest
             ruins/mackerel-agent:${{ github.event.inputs.docker_tag }}
-            gchr.io/xruins/mackerel-agent:latest
-            gchr.io/xruins/mackerel-agent:${{ github.event.inputs.docker_tag }}
+            ghcr.io/xruins/mackerel-agent:latest
+            ghcr.io/xruins/mackerel-agent:${{ github.event.inputs.docker_tag }}
           build-args: |
             HASH_MACKEREL_AGENT=${{ github.event.inputs.hash_mackerel-agent }}
             HASH_MACKEREL_PLUGINS=${{ github.event.inputs.hash_mackerel-plugins }}
