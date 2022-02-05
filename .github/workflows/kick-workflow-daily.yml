@@ -52,3 +52,15 @@ jobs:
              "docker_tag": "${{ env.HASH_TOTAL }}",
              "hash_mackerel-agent": "${{ env.HASH_MACKEREL_AGENT }}"
             }
+
+      - name: Invoke `latest-sensors` workflow
+        uses: benc-uk/workflow-dispatch@v1
+        if: ${{ env.EXIST == 'false' }}
+        with:
+          workflow: latest-sensors-build
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          inputs: |
+            {
+             "docker_tag": "${{ env.HASH_TOTAL }}",
+             "hash_mackerel-agent": "${{ env.HASH_MACKEREL_AGENT }}"
+            }
