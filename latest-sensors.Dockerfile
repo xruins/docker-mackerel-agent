@@ -44,6 +44,8 @@ RUN git clone --depth=1 https://github.com/mackerelio/go-check-plugins /go/src/g
 
 FROM debian:stable-slim
 COPY --from=builder /artifacts/* /usr/bin/
+# workaround for "x509: certificate signed by unknown authority" error
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY docker-mackerel-agent/startup.sh /startup.sh
 COPY wrapper.sh /wrapper.sh
 RUN chmod -R 755 \
