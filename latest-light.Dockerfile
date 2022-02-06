@@ -24,6 +24,7 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
     go build -ldflags="-w -s" -o /artifacts/mkr
 
 FROM alpine
+LABEL org.opencontainers.image.source https://github.com/xruins/docker-mackerel-agent
 COPY --from=builder /artifacts/* /usr/bin/
 COPY docker-mackerel-agent/startup.sh /startup.sh
 COPY wrapper.sh /wrapper.sh

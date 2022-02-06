@@ -43,6 +43,7 @@ RUN git clone --depth=1 https://github.com/mackerelio/go-check-plugins /go/src/g
     done
 
 FROM alpine
+LABEL org.opencontainers.image.source https://github.com/xruins/docker-mackerel-agent
 COPY --from=builder /artifacts/* /usr/bin/
 COPY docker-mackerel-agent/startup.sh /startup.sh
 COPY wrapper.sh /wrapper.sh

@@ -43,6 +43,7 @@ RUN git clone --depth=1 https://github.com/mackerelio/go-check-plugins /go/src/g
     done
 
 FROM debian:stable-slim
+LABEL org.opencontainers.image.source https://github.com/xruins/docker-mackerel-agent
 COPY --from=builder /artifacts/* /usr/bin/
 # workaround for "x509: certificate signed by unknown authority" error
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
