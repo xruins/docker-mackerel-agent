@@ -56,7 +56,7 @@ RUN chmod -R 755 \
     /usr/bin/check-* \
     /usr/bin/mkr && \
     apt-get update && \
-    apt-get install --no-install-recommends -y lm-sensors smartmontools hddtemp && \
+    apt-get install --no-install-recommends -y net-tools lm-sensors smartmontools hddtemp && \
     apt-get clean && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*
