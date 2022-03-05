@@ -1,0 +1,4 @@
+*
+!wrapper.sh
+docker-mackerel-agent/**
+!docker-mackerel-agent/startup.sh

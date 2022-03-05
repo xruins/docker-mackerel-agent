@@ -54,10 +54,21 @@ RUN chmod -R 755 \
     /wrapper.sh \
     /usr/bin/mackerel-* \
     /usr/bin/check-* \
-    /usr/bin/mkr && \
-    apt-get update && \
-    apt-get install --no-install-recommends -y net-tools lm-sensors smartmontools hddtemp && \
-    apt-get clean && \
+    /usr/bin/mkr
+RUN apt-get update && \
+    apt-get install -y ca-certificates curl gnupg2 lsb-release net-tools
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg \
+    && echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
+    $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
+    net-tools \
+    jq \
+    docker-ce-cli \
+    lm-sensors \
+    smartmontools \
+    hddtemp &&\
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*
 ENV PATH $PATH:/opt/mackerel-agent/plugins/bin
