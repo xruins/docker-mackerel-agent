@@ -26,7 +26,6 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
 FROM alpine
 LABEL org.opencontainers.image.source https://github.com/xruins/docker-mackerel-agent
 COPY --chmod=755 --from=builder /artifacts/* /usr/bin/
-COPY --chmod=755 docker-mackerel-agent/startup.sh wrapper.sh startup.sh
-COPY wrapper.sh /wrapper.sh
+COPY --chmod=755 docker-mackerel-agent/startup.sh wrapper.sh /
 ENV PATH $PATH:/opt/mackerel-agent/plugins/bin
 CMD ["/wrapper.sh"]
