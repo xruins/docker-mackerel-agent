@@ -44,17 +44,10 @@ RUN git clone --depth=1 https://github.com/mackerelio/go-check-plugins /go/src/g
 
 FROM debian:stable-slim
 LABEL org.opencontainers.image.source https://github.com/xruins/docker-mackerel-agent
-COPY --from=builder /artifacts/* /usr/bin/
+COPY --from=builder --chmod=755 /artifacts/* /usr/bin/
 # workaround for "x509: certificate signed by unknown authority" error
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-COPY docker-mackerel-agent/startup.sh /startup.sh
-COPY wrapper.sh /wrapper.sh
-RUN chmod -R 755 \
-    /startup.sh \
-    /wrapper.sh \
-    /usr/bin/mackerel-* \
-    /usr/bin/check-* \
-    /usr/bin/mkr
+COPY --chmod=755 docker-mackerel-agent/startup.sh wrapper.sh /
 RUN apt-get update && \
     apt-get install -y ca-certificates curl gnupg2 lsb-release net-tools
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg \
