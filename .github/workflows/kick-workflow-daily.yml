@@ -1,5 +1,8 @@
 name: kick-workflow-daily
 on:
+  push:
+    branches:
+      - master
   workflow_dispatch:
   schedule:
     - cron: '0 5 * * *'
@@ -29,7 +32,7 @@ jobs:
         
       - name: Invoke `latest` workflow
         uses: benc-uk/workflow-dispatch@v1
-        if: ${{ env.EXIST == 'false' }}
+        if: ${{ github.event_name == 'push' || env.EXIST == 'false' }}
         with:
           workflow: latest-build
           token: ${{ secrets.PERSONAL_TOKEN }}
@@ -43,7 +46,7 @@ jobs:
 
       - name: Invoke `latest-light` workflow
         uses: benc-uk/workflow-dispatch@v1
-        if: ${{ env.EXIST == 'false' }}
+        if: ${{ github.event_name == 'push' || env.EXIST == 'false' }}
         with:
           workflow: latest-light-build
           token: ${{ secrets.PERSONAL_TOKEN }}
@@ -55,7 +58,7 @@ jobs:
 
       - name: Invoke `latest-sensors` workflow
         uses: benc-uk/workflow-dispatch@v1
-        if: ${{ env.EXIST == 'false' }}
+        if: ${{ github.event_name == 'push' || env.EXIST == 'false' }}
         with:
           workflow: latest-sensors-build
           token: ${{ secrets.PERSONAL_TOKEN }}
