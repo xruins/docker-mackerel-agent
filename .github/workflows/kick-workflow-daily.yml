@@ -13,6 +13,7 @@ jobs:
     steps:
       - name: Check mackerelio repositories
         run: |
+          echo "HASH_DOCKER_MACKEREL_AGENT=$(git ls-remote -h https://github.com/xruins/docker-mackerel-agent | grep master | awk '{ print $1 }')" | tee -a $GITHUB_ENV 
           echo "HASH_MACKEREL_AGENT=$(git ls-remote -h https://github.com/mackerelio/mackerel-agent | grep master | awk '{ print $1 }')" | tee -a $GITHUB_ENV
           echo "HASH_MACKEREL_PLUGINS=$(git ls-remote -h https://github.com/mackerelio/mackerel-agent-plugins | grep master | awk '{ print $1 }')" | tee -a $GITHUB_ENV
           echo "HASH_MACKEREL_CHECK_PLUGINS=$(git ls-remote -h https://github.com/mackerelio/go-check-plugins | grep master | awk '{ print $1 }')" | tee -a $GITHUB_ENV
@@ -20,7 +21,7 @@ jobs:
         
       - name: Check unified hash
         run: |
-          HASH_TOTAL=$(echo "${HASH_MACKEREL_AGENT}-${HASH_MACKEREL_PLUGINS}-${HASH_MACKEREL_CHECK_PLUGINS}" | sha1sum - | awk '{ print $1 }')
+          HASH_TOTAL=$(echo "${HASH_DOCKER_MACKEREL_AGENT}-${HASH_MACKEREL_AGENT}-${HASH_MACKEREL_PLUGINS}-${HASH_MACKEREL_CHECK_PLUGINS}" | sha1sum - | awk '{ print $1 }')
           echo "HASH_TOTAL=${HASH_TOTAL}" | tee -a $GITHUB_ENV
         shell: bash
         
@@ -39,6 +40,7 @@ jobs:
           inputs: |
             {
               "docker_tag": "${{ env.HASH_TOTAL }}",
+              "hash_docker-mackerel-agent": "${{ env.HASH_DOCKER_MACKEREL_AGENT }}",
               "hash_mackerel-agent": "${{ env.HASH_MACKEREL_AGENT }}",
               "hash_mackerel-plugins": "${{ env.HASH_MACKEREL_PLUGINS }}",
               "hash_mackerel-check-plugins": "${{ env.HASH_MACKEREL_CHECK_PLUGINS }}"
@@ -53,6 +55,7 @@ jobs:
           inputs: |
             {
              "docker_tag": "${{ env.HASH_TOTAL }}",
+             "hash_docker-mackerel-agent": "${{ env.HASH_DOCKER_MACKEREL_AGENT }}",
              "hash_mackerel-agent": "${{ env.HASH_MACKEREL_AGENT }}"
             }
 
@@ -65,5 +68,6 @@ jobs:
           inputs: |
             {
              "docker_tag": "${{ env.HASH_TOTAL }}",
+             "hash_docker-mackerel-agent": "${{ env.HASH_DOCKER_MACKEREL_AGENT }}",
              "hash_mackerel-agent": "${{ env.HASH_MACKEREL_AGENT }}"
             }
