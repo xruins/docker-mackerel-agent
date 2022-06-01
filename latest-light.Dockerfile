@@ -2,10 +2,11 @@ FROM --platform=$TARGETPLATFORM golang AS builder
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
+ARG HASH_DOCKER_MACKEREL_AGENT
+ARG HASH_MACKEREL_AGENT
 
 WORKDIR /go/src/github.com/mackerelio/mackerel-agent
 
-ARG HASH_MACKEREL_AGENT
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d'/' -f2) && \
     export GOARM=$(echo ${TARGETPLATFORM} | cut -d'/' -f3 | cut -c2) && \
@@ -24,7 +25,9 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
     go build -ldflags="-w -s" -o /artifacts/mkr
 
 FROM alpine
-LABEL org.opencontainers.image.source https://github.com/xruins/docker-mackerel-agent
+LABEL "org.opencontainers.image.source"="https://github.com/xruins/docker-mackerel-agent" \
+    "revisions.docker-mackerel-agent"=$HASH_DOCKER_MACKEREL_AGENT \
+    "revisions.mackerel-agent"=$HASH_MACKEREL_AGENT
 COPY --chmod=755 --from=builder /artifacts/* /usr/bin/
 COPY --chmod=755 docker-mackerel-agent/startup.sh wrapper.sh /
 ENV PATH $PATH:/opt/mackerel-agent/plugins/bin

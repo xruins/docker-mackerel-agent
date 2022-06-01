@@ -5,6 +5,7 @@ ARG BUILDPLATFORM
 
 WORKDIR /go/src/github.com/mackerelio/mackerel-agent
 
+ARG HASH_DOCKER_MACKEREL_AGENT
 ARG HASH_MACKEREL_AGENT
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d'/' -f2) && \
@@ -43,7 +44,11 @@ RUN git clone --depth=1 https://github.com/mackerelio/go-check-plugins /go/src/g
     done
 
 FROM debian:stable-slim
-LABEL org.opencontainers.image.source https://github.com/xruins/docker-mackerel-agent
+LABEL org.opencontainers.image.source https://github.com/xruins/docker-mackerel-agent \
+    "revisions.docker-mackerel-agent"=$HASH_DOCKER_MACKEREL_AGENT \
+    "revisions.mackerel-agent"=$HASH_MACKEREL_AGENT \
+    "revisions.mackerel-agent-plugins"=$HASH_MACKEREL_PLUGINS \
+    "revisions.mackerel-check-plugins"=$HASH_MACKEREL_CHECK_PLUGINS
 COPY --from=builder --chmod=755 /artifacts/* /usr/bin/
 # workaround for "x509: certificate signed by unknown authority" error
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/

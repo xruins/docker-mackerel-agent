@@ -5,6 +5,7 @@ ARG BUILDPLATFORM
 
 WORKDIR /go/src/github.com/mackerelio/mackerel-agent
 
+ARG HASH_DOCKER_MACKEREL_AGENT
 ARG HASH_MACKEREL_AGENT
 RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d'/' -f2) && \
@@ -43,7 +44,11 @@ RUN git clone --depth=1 https://github.com/mackerelio/go-check-plugins /go/src/g
     done
 
 FROM alpine
-LABEL org.opencontainers.image.source https://github.com/xruins/docker-mackerel-agent
+LABEL org.opencontainers.image.source https://github.com/xruins/docker-mackerel-agent \
+    "revisions.docker-mackerel-agent"=$HASH_DOCKER_MACKEREL_AGENT \
+    "revisions.mackerel-agent"=$HASH_MACKEREL_AGENT \
+    "revisions.mackerel-agent-plugins"=$HASH_MACKEREL_PLUGINS \
+    "revisions.mackerel-check-plugins"=$HASH_MACKEREL_CHECK_PLUGINS
 COPY --chmod=755 --from=builder /artifacts/* /usr/bin/
 COPY --chmod=755 docker-mackerel-agent/startup.sh wrapper.sh /
 RUN apk add --no-cache libc6-compat docker
