@@ -54,6 +54,7 @@ jobs:
             ruins/mackerel-agent:latest-light
             ruins/mackerel-agent:${{ github.event.inputs.docker_tag }}-light
           build-args: |
+            HASH_DOCKER_MACKEREL_AGENT=${{ github.event.inputs.hash_docker-mackerel-agent }}
             HASH_MACKEREL_AGENT=${{ github.event.inputs.hash_mackerel-agent }}
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           push: true

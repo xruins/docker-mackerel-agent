@@ -54,7 +54,10 @@ jobs:
             ruins/mackerel-agent:latest-sensors
             ruins/mackerel-agent:${{ github.event.inputs.docker_tag }}-sensors
           build-args: |
+            HASH_DOCKER_MACKEREL_AGENT=${{ github.event.inputs.hash_docker-mackerel-agent }}
             HASH_MACKEREL_AGENT=${{ github.event.inputs.hash_mackerel-agent }}
+            HASH_MACKEREL_PLUGINS=${{ github.event.inputs.hash_mackerel-plugins }}
+            HASH_MACKEREL_CHECK_PLUGINS=${{ github.event.inputs.hash_mackerel-check-plugins }}
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache
