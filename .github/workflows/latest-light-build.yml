@@ -6,7 +6,11 @@ on:
       docker_tag:
         description: "docker image tag"
         required: false
-        default: "latest" 
+        default: "latest-light"
+      hash_docker-mackerel-agent:
+        description: "commit hash of xruins/docker-mackerel-agent"
+        required: false
+        default: "" 
       hash_mackerel-agent:
         description: "commit hash of mackerelio/mackerel-agent"
         required: false
