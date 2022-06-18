@@ -7,7 +7,9 @@ WORKDIR /go/src/github.com/mackerelio/mackerel-agent
 
 ARG HASH_DOCKER_MACKEREL_AGENT
 ARG HASH_MACKEREL_AGENT
-RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
+RUN --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d'/' -f2) && \
     export GOARM=$(echo ${TARGETPLATFORM} | cut -d'/' -f3 | cut -c2) && \
     echo "[build info]\n\
@@ -21,7 +23,9 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
     go build -ldflags="-w -s" -o /artifacts/mackerel-agent
     
 ARG HASH_MACKEREL_PLUGINS
-RUN git clone --depth=1 https://github.com/mackerelio/mkr /go/src/github.com/mackerelio/mkr && \
+RUN --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    git clone --depth=1 https://github.com/mackerelio/mkr /go/src/github.com/mackerelio/mkr && \
     cd /go/src/github.com/mackerelio/mkr && \
     go build -ldflags="-w -s" -o /artifacts/mkr && \
     git clone --depth=1 https://github.com/mackerelio/mackerel-agent-plugins /go/src/github.com/mackerelio/mackerel-agent-plugins && \
@@ -34,7 +38,9 @@ RUN git clone --depth=1 https://github.com/mackerelio/mkr /go/src/github.com/mac
     done
     
 ARG HASH_MACKEREL_CHECK_PLUGINS
-RUN git clone --depth=1 https://github.com/mackerelio/go-check-plugins /go/src/github.com/mackerelio/go-check-plugins && \
+RU  --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    git clone --depth=1 https://github.com/mackerelio/go-check-plugins /go/src/github.com/mackerelio/go-check-plugins && \
     plugins=$(find /go/src/github.com/mackerelio/go-check-plugins -name "check-*" -type d) && \
     for dir in ${plugins}; \
     do \
@@ -44,11 +50,11 @@ RUN git clone --depth=1 https://github.com/mackerelio/go-check-plugins /go/src/g
     done
 
 FROM debian:stable-slim
-LABEL org.opencontainers.image.source https://github.com/xruins/docker-mackerel-agent \
-    "revisions.docker-mackerel-agent"=$HASH_DOCKER_MACKEREL_AGENT \
-    "revisions.mackerel-agent"=$HASH_MACKEREL_AGENT \
-    "revisions.mackerel-agent-plugins"=$HASH_MACKEREL_PLUGINS \
-    "revisions.mackerel-check-plugins"=$HASH_MACKEREL_CHECK_PLUGINS
+LABEL org.opencontainers.image.source https://github.com/xruins/docker-mackerel-agent
+LABEL revisions.docker-mackerel-agent $HASH_DOCKER_MACKEREL_AGENT
+LABEL revisions.mackerel-agent $HASH_MACKEREL_AGENT
+LABEL revisions.mackerel-agent-plugins $HASH_MACKEREL_PLUGINS
+LABEL revisions.mackerel-check-plugins $HASH_MACKEREL_CHECK_PLUGINS
 COPY --from=builder --chmod=755 /artifacts/* /usr/bin/
 # workaround for "x509: certificate signed by unknown authority" error
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
