@@ -7,7 +7,9 @@ WORKDIR /go/src/github.com/mackerelio/mackerel-agent
 
 ARG HASH_DOCKER_MACKEREL_AGENT
 ARG HASH_MACKEREL_AGENT
-RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
+RUN --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d'/' -f2) && \
     export GOARM=$(echo ${TARGETPLATFORM} | cut -d'/' -f3 | cut -c2) && \
     echo "[build info]\n\
@@ -21,7 +23,9 @@ RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
     go build -ldflags="-w -s" -o /artifacts/mackerel-agent
     
 ARG HASH_MACKEREL_PLUGINS
-RUN git clone --depth=1 https://github.com/mackerelio/mkr /go/src/github.com/mackerelio/mkr && \
+RUN --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    git clone --depth=1 https://github.com/mackerelio/mkr /go/src/github.com/mackerelio/mkr && \
     cd /go/src/github.com/mackerelio/mkr && \
     go build -ldflags="-w -s" -o /artifacts/mkr && \
     git clone --depth=1 https://github.com/mackerelio/mackerel-agent-plugins /go/src/github.com/mackerelio/mackerel-agent-plugins && \
@@ -34,7 +38,9 @@ RUN git clone --depth=1 https://github.com/mackerelio/mkr /go/src/github.com/mac
     done
     
 ARG HASH_MACKEREL_CHECK_PLUGINS
-RUN git clone --depth=1 https://github.com/mackerelio/go-check-plugins /go/src/github.com/mackerelio/go-check-plugins && \
+RUN --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    git clone --depth=1 https://github.com/mackerelio/go-check-plugins /go/src/github.com/mackerelio/go-check-plugins && \
     plugins=$(find /go/src/github.com/mackerelio/go-check-plugins -name "check-*" -type d) && \
     for dir in ${plugins}; \
     do \

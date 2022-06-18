@@ -7,7 +7,9 @@ ARG HASH_MACKEREL_AGENT
 
 WORKDIR /go/src/github.com/mackerelio/mackerel-agent
 
-RUN export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
+RUN --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    export GOOS=$(echo ${TARGETPLATFORM} | cut -d'/' -f1) && \
     export GOARCH=$(echo ${TARGETPLATFORM} | cut -d'/' -f2) && \
     export GOARM=$(echo ${TARGETPLATFORM} | cut -d'/' -f3 | cut -c2) && \
     export CGO_ENABLED=0 && \
