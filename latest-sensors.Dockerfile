@@ -50,11 +50,11 @@ RU  --mount=type=cache,target=/go/pkg/mod \
     done
 
 FROM debian:stable-slim
-LABEL org.opencontainers.image.source https://github.com/xruins/docker-mackerel-agent \
-    "revisions.docker-mackerel-agent"=$HASH_DOCKER_MACKEREL_AGENT \
-    "revisions.mackerel-agent"=$HASH_MACKEREL_AGENT \
-    "revisions.mackerel-agent-plugins"=$HASH_MACKEREL_PLUGINS \
-    "revisions.mackerel-check-plugins"=$HASH_MACKEREL_CHECK_PLUGINS
+LABEL org.opencontainers.image.source https://github.com/xruins/docker-mackerel-agent
+LABEL revisions.docker-mackerel-agent $HASH_DOCKER_MACKEREL_AGENT
+LABEL revisions.mackerel-agent $HASH_MACKEREL_AGENT
+LABEL revisions.mackerel-agent-plugins $HASH_MACKEREL_PLUGINS
+LABEL revisions.mackerel-check-plugins $HASH_MACKEREL_CHECK_PLUGINS
 COPY --from=builder --chmod=755 /artifacts/* /usr/bin/
 # workaround for "x509: certificate signed by unknown authority" error
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/

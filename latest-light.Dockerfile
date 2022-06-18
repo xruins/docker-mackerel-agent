@@ -27,9 +27,11 @@ RUN --mount=type=cache,target=/go/pkg/mod \
     go build -ldflags="-w -s" -o /artifacts/mkr
 
 FROM alpine
-LABEL "org.opencontainers.image.source"="https://github.com/xruins/docker-mackerel-agent" \
-    "revisions.docker-mackerel-agent"=$HASH_DOCKER_MACKEREL_AGENT \
-    "revisions.mackerel-agent"=$HASH_MACKEREL_AGENT
+LABEL org.opencontainers.image.source https://github.com/xruins/docker-mackerel-agent
+LABEL revisions.docker-mackerel-agent $HASH_DOCKER_MACKEREL_AGENT
+LABEL revisions.mackerel-agent $HASH_MACKEREL_AGENT
+LABEL revisions.mackerel-agent-plugins $HASH_MACKEREL_PLUGINS
+LABEL revisions.mackerel-check-plugins $HASH_MACKEREL_CHECK_PLUGINS
 COPY --chmod=755 --from=builder /artifacts/* /usr/bin/
 COPY --chmod=755 docker-mackerel-agent/startup.sh wrapper.sh /
 ENV PATH $PATH:/opt/mackerel-agent/plugins/bin
