@@ -38,7 +38,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
     done
     
 ARG HASH_MACKEREL_CHECK_PLUGINS
-RU  --mount=type=cache,target=/go/pkg/mod \
+RUN --mount=type=cache,target=/go/pkg/mod \
     --mount=type=cache,target=/root/.cache/go-build \
     git clone --depth=1 https://github.com/mackerelio/go-check-plugins /go/src/github.com/mackerelio/go-check-plugins && \
     plugins=$(find /go/src/github.com/mackerelio/go-check-plugins -name "check-*" -type d) && \
