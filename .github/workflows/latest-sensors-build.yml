@@ -64,8 +64,8 @@ jobs:
           tags: |
             ruins/mackerel-agent:latest-sensors
             ruins/mackerel-agent:${{ github.event.inputs.docker_tag }}-sensors
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest-sensors
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.docker_tag }}-sensors
+            ghcr.io/${{ github.repository_owner }}/mackerel-agent:latest-sensors
+            ghcr.io/${{ github.repository_owner }}/mackerel-agent:${{ github.event.inputs.docker_tag }}-sensors
           build-args: |
             HASH_DOCKER_MACKEREL_AGENT=${{ github.event.inputs.hash_docker-mackerel-agent }}
             HASH_MACKEREL_AGENT=${{ github.event.inputs.hash_mackerel-agent }}
